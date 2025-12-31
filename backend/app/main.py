@@ -86,7 +86,7 @@ async def lifespan(app: FastAPI):
     # 3. Shutdown
     scheduler.shutdown()
 
-app = FastAPI(title="Unified Event Hub", lifespan=lifespan)
+app = FastAPI(title="Infinite BZ API", lifespan=lifespan)
 
 @app.middleware("http")
 async def log_requests(request, call_next):
@@ -122,4 +122,4 @@ async def manual_scrape():
 
 @app.get("/")
 def root():
-    return {"message": "Event Hub Backend is Running with Hybrid Scraper 🕒"}
+    return {"message": "Infinite BZ Backend is Running with Hybrid Scraper 🕒"}
