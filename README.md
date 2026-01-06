@@ -4,97 +4,74 @@ A comprehensive full-stack web application designed to aggregate, filter, and ma
 
 ## 🚀 Technologies Used
 
-### Frontend
-*   **Framework**: React (Vite)
-*   **Styling**: Tailwind CSS (Custom Dark/Cyan Theme)
-*   **Icons**: Lucide React
-*   **State Management**: React Hooks (useState, useEffect)
-*   **HTTP Client**: Built-in Fetch API
+### Frontend (Client-Side)
+*   **React (Vite)**: Fast, modern frontend framework.
+*   **Tailwind CSS**: Utility-first CSS framework for the custom "Dark/Cyan" theme.
+*   **Lucide React**: Beautiful, consistent icon set.
+*   **Axios / Fetch**: For API communication.
+*   **React Router**: For navigation between Dashboard, Auth, and Landing pages.
 
-### Backend
-*   **Framework**: FastAPI (Python)
-*   **Database**: PostgreSQL (via SQLModel/SQLAlchemy)
-*   **Automation**: Playwright (for scraping and auto-registration)
-*   **Authentication**: JWT (JSON Web Tokens) + Google OAuth
-*   **Server**: Uvicorn
+### Backend (Server-Side)
+*   **FastAPI (Python 3.10+)**: High-performance "async" web framework.
+*   **Uvicorn**: ASGI server implementation.
+*   **Playwright**: Browser automation library for the Auto-Registration feature (Anti-CAPTCHA support).
+*   **APScheduler**: For scheduling background scraping tasks.
+*   **Pydantic**: Data validation and settings management.
 
-## 📂 Project Structure
+### Database & Storage
+*   **PostgreSQL**: Primary relational database.
+*   **SQLModel / SQLAlchemy**: ORM (Object Relational Mapper) for database interactions.
+*   **Alembic**: Database migration tool.
 
-```
-Infinite_BZ/
-├── backend/            # Python FastAPI Backend
-│   ├── app/            # Main Application Code
-│   │   ├── api/        # API Routes
-│   │   ├── models/     # Database Models (SQL Model)
-│   │   └── services/   # Business Logic (Scraper, Registrar)
-│   ├── requirements.txt
-│   └── run.py          # Entry point
-│
-├── frontend/           # React Frontend
-│   ├── src/            # Source Code
-│   └── tailwind.config.js
-```
+### Authentication
+*   **JWT (JSON Web Tokens)**: Secure, stateless user sessions.
+*   **Google OAuth2**: "Sign in with Google" integration.
+*   **Passlib**: Secure password hashing (Bcrypt).
+
+## 📂 Key Features
+
+1.  **Event Aggregation**: Scrapes multiple sources (Eventbrite, Meetup) to create a central feed.
+2.  **Auto-Registration**: "One-Click" registration for free events using a background browser robot.
+3.  **Smart Filtering**: Filter events by City, Category, Date, Price, and Mode.
+4.  **Premium UI**: Dark mode dashboard with "Infinite Tech" branding.
 
 ## 🛠️ Setup Instructions
 
-### Prerequisites
-*   Python 3.10+
-*   Node.js & npm
-*   PostgreSQL Database
+### 1. Clone Repository
+```bash
+git clone https://github.com/PradeepShanmugaraj007/Infinite_BZ.git
+cd Infinite_BZ
+```
 
-### 1. Backend Setup
-Navigate to the backend directory:
+### 2. Backend Setup
+Navigate to the backend folder:
 ```bash
 cd backend
 ```
 
-Create and activate a virtual environment:
+Create a virtual environment & install dependencies:
 ```bash
 python -m venv venv
-# Windows
-.\venv\Scripts\activate
-# Mac/Linux
-source venv/bin/activate
-```
-
-Install dependencies:
-```bash
+# Activate: .\venv\Scripts\activate (Windows) or source venv/bin/activate (Mac/Linux)
 pip install -r requirements.txt
-playwright install  # Install browser binaries
+playwright install
 ```
 
 Run the server:
 ```bash
 python run.py
 ```
-*The backend runs on http://localhost:8000*
+*(Server runs on http://localhost:8000)*
 
-### 2. Frontend Setup
-Navigate to the frontend directory:
+### 3. Frontend Setup
+Navigate to the frontend folder:
 ```bash
 cd frontend
 ```
 
-Install dependencies:
+Install packages and run:
 ```bash
 npm install
-```
-
-Run the development server:
-```bash
 npm run dev
 ```
-*The frontend runs on http://localhost:5173*
-
-## ✨ Key Features
-*   **Event Aggregation**: Scrapes and displays events from Eventbrite and other sources.
-*   **Advanced Filtering**: Filter by City, Industry, Date, Cost, and Mode (Online/Offline).
-*   **Auto-Registration**: Automates the checkout process for free events using Playwright.
-*   **User Dashboard**: Track registered events and view statistics.
-*   **Dark Mode Theme**: Premium "Infinite Tech AI" dark theme with Cyan accents.
-
-## 🤝 Contribution
-1.  Clone the repository.
-2.  Create a feature branch.
-3.  Commit your changes.
-4.  Push to the branch and open a Pull Request.
+*(Frontend runs on http://localhost:5173)*
