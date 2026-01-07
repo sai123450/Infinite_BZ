@@ -31,22 +31,22 @@ export default function EventFeed({ events, loading, error, onBack }) {
       <div className="max-w-7xl mx-auto">
         <header className="mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-4">
-             {onBack && (
-                 <button onClick={onBack} className="p-2 hover:bg-slate-800 rounded-full transition-colors">
-                     <ArrowLeft size={24} />
-                 </button>
-             )}
-             <div>
-                <h1 className="text-3xl font-bold text-white">All Events</h1>
-                <p className="text-slate-400">Browse {events.length} upcoming events in Chennai</p>
-             </div>
+            {onBack && (
+              <button onClick={onBack} className="p-2 hover:bg-slate-800 rounded-full transition-colors">
+                <ArrowLeft size={24} />
+              </button>
+            )}
+            <div>
+              <h1 className="text-3xl font-bold text-white">All Events</h1>
+              <p className="text-slate-400">Browse {events.length} upcoming events in Chennai</p>
+            </div>
           </div>
           <div className="relative w-full md:w-auto">
             <Search className="absolute left-3 top-3 text-slate-500" size={20} />
             <input
               type="text"
               placeholder="Search events..."
-              className="bg-slate-900 border border-slate-800 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-sky-500 w-full md:w-80 text-slate-200 placeholder-slate-500"
+              className="bg-slate-900 border border-slate-800 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-primary-500 w-full md:w-80 text-slate-200 placeholder-slate-500"
               value={search}
               onChange={e => setSearch(e.target.value)}
             />
@@ -60,20 +60,20 @@ export default function EventFeed({ events, loading, error, onBack }) {
         )}
 
         {loading ? (
-          <div className="text-center py-20 animate-pulse text-sky-400">Loading Events...</div>
+          <div className="text-center py-20 animate-pulse text-primary-400">Loading Events...</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map(event => (
-              <div key={event.id} className="bg-slate-900 rounded-xl overflow-hidden hover:shadow-xl hover:shadow-sky-500/10 transition-all border border-slate-800 group hover:-translate-y-1">
+              <div key={event.id} className="bg-slate-900 rounded-xl overflow-hidden hover:shadow-xl hover:shadow-primary-500/10 transition-all border border-slate-800 group hover:-translate-y-1">
                 <div className="h-48 bg-slate-800 relative overflow-hidden">
                   {event.image_url ? (
                     <img src={event.image_url} alt={event.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="flex items-center justify-center h-full text-slate-600 bg-slate-800">
-                        <Calendar size={48} opacity={0.2} />
+                      <Calendar size={48} opacity={0.2} />
                     </div>
                   )}
-                  <div className="absolute top-3 right-3 bg-slate-950/90 px-3 py-1 rounded-full text-xs font-bold text-sky-400 border border-sky-500/20 backdrop-blur-sm">
+                  <div className="absolute top-3 right-3 bg-slate-950/90 px-3 py-1 rounded-full text-xs font-bold text-primary-400 border border-primary-500/20 backdrop-blur-sm">
                     {event.is_free ? 'FREE' : 'PAID'}
                   </div>
                 </div>
@@ -83,13 +83,13 @@ export default function EventFeed({ events, loading, error, onBack }) {
 
                   <div className="space-y-3 text-sm text-slate-400 mb-6 flex-1">
                     <div className="flex items-center gap-3">
-                      <div className="p-1.5 bg-slate-800 rounded-lg text-sky-500">
+                      <div className="p-1.5 bg-slate-800 rounded-lg text-primary-500">
                         <Calendar size={14} />
                       </div>
-                      <span className="font-medium">{new Date(event.start_time).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' })}</span>
+                      <span className="font-medium">{new Date(event.start_time).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
                     </div>
                     <div className="flex items-center gap-3">
-                       <div className="p-1.5 bg-slate-800 rounded-lg text-sky-500">
+                      <div className="p-1.5 bg-slate-800 rounded-lg text-primary-500">
                         <MapPin size={14} />
                       </div>
                       <span className="line-clamp-1">{event.venue_name}</span>
@@ -98,7 +98,7 @@ export default function EventFeed({ events, loading, error, onBack }) {
 
                   <button
                     onClick={() => handleRegister(event)}
-                    className="w-full bg-sky-600 hover:bg-sky-500 text-white font-medium py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-sky-500/25 active:scale-95"
+                    className="w-full bg-primary-600 hover:bg-primary-500 text-white font-medium py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-primary-500/25 active:scale-95"
                   >
                     <span>Register Now</span>
                     <ExternalLink size={16} />

@@ -21,18 +21,24 @@ export default {
                     900: '#0B1221', // PRIMARY BACKGROUND (Exact Match)
                     950: '#020617',
                 },
-                // Primary Accent: Cyan/Teal (Replacing 'gold' logic but keeping key to avoid breaking code)
-                // The user wants 'Infinite Tech AI' Cyan.
-                gold: {
-                    400: '#22d3ee', // Cyan 400 (Bright - Selection Color)
-                    500: '#06b6d4', // Cyan 500 (Primary Button Frame)
-                    600: '#0891b2', // Cyan 600 (Hover State)
+                // Primary Accent: Cyan/Teal (Matching reference image)
+                primary: {
+                    DEFAULT: '#22d3ee', // Cyan 400 (Main)
+                    400: '#22d3ee',
+                    500: '#06b6d4',
+                    600: '#0891b2',
+                    glow: 'rgba(34, 211, 238, 0.5)'
                 },
-                // Secondary Accents (Deep Blue/Teal)
+                // Keeping existing keys to prevent breakage, mapped to new palette
+                gold: {
+                    400: '#22d3ee',
+                    500: '#06b6d4',
+                    600: '#0891b2',
+                },
                 sky: {
-                    400: '#38bdf8',
-                    500: '#0ea5e9',
-                    600: '#0284c7',
+                    400: '#22d3ee',
+                    500: '#06b6d4',
+                    600: '#0891b2',
                 }
             }
         },

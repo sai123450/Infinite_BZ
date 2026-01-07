@@ -186,11 +186,11 @@ export default function AuthPage({ onBack, onComplete, initialMode = 'login' }) 
                         alt="Networking"
                         className="w-full h-full object-cover opacity-20 hover:scale-105 transition-transform duration-[20s]"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B1221] via-[#0B1221]/80 to-sky-900/20" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B1221] via-[#0B1221]/80 to-primary-900/20" />
                 </div>
 
                 <div className="relative z-10 max-w-lg px-12 text-center">
-                    <div className="w-16 h-16 bg-sky-500 rounded-2xl mx-auto mb-8 flex items-center justify-center shadow-2xl shadow-sky-500/30 rotate-3 hover:rotate-6 transition-transform">
+                    <div className="w-16 h-16 bg-primary-500 rounded-2xl mx-auto mb-8 flex items-center justify-center shadow-2xl shadow-primary-500/30 rotate-3 hover:rotate-6 transition-transform">
                         <div className="w-8 h-8 border-4 border-white rounded-lg" />
                     </div>
 
@@ -202,7 +202,7 @@ export default function AuthPage({ onBack, onComplete, initialMode = 'login' }) 
                     </p>
 
                     <div className="inline-flex items-center gap-3 bg-slate-800/50 backdrop-blur-md px-5 py-3 rounded-full border border-white/10">
-                        <CheckCircle2 className="text-sky-400" size={20} />
+                        <CheckCircle2 className="text-primary-400" size={20} />
                         <span className="text-sm font-semibold text-white">Trusted by 10,000+ Developers in India</span>
                     </div>
                 </div>
@@ -240,14 +240,14 @@ export default function AuthPage({ onBack, onComplete, initialMode = 'login' }) 
                                 onClick={() => toggleMode('login')}
                                 className={`py-2.5 rounded-lg text-sm font-bold transition-all relative overflow-hidden ${mode === 'login' ? 'text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}
                             >
-                                {mode === 'login' && <div className="absolute inset-0 bg-gradient-to-r from-sky-600 to-purple-600 opacity-100" />}
+                                {mode === 'login' && <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-primary-800 opacity-100" />}
                                 <span className="relative z-10">Log In</span>
                             </button>
                             <button
                                 onClick={() => toggleMode('signup')}
                                 className={`py-2.5 rounded-lg text-sm font-bold transition-all relative overflow-hidden ${mode === 'signup' ? 'text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}
                             >
-                                {mode === 'signup' && <div className="absolute inset-0 bg-gradient-to-r from-sky-600 to-purple-600 opacity-100" />}
+                                {mode === 'signup' && <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-primary-800 opacity-100" />}
                                 <span className="relative z-10">Sign Up</span>
                             </button>
                         </div>
@@ -416,7 +416,7 @@ export default function AuthPage({ onBack, onComplete, initialMode = 'login' }) 
                                         <CheckCircle2 size={12} className="absolute top-0.5 left-0.5 text-white opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" />
                                     </div>
                                     <label htmlFor="agreed" className="text-sm font-medium text-slate-400 select-none cursor-pointer">
-                                        I agree to the <span onClick={(e) => { e.preventDefault(); setActiveModal('terms'); }} className="text-sky-500 hover:text-sky-400 hover:underline cursor-pointer">Terms and Conditons</span> and <span onClick={(e) => { e.preventDefault(); setActiveModal('privacy'); }} className="text-sky-500 hover:text-sky-400 hover:underline cursor-pointer">Privacy Policy</span>.
+                                        I agree to the <span onClick={(e) => { e.preventDefault(); setActiveModal('terms'); }} className="text-primary-500 hover:text-primary-400 hover:underline cursor-pointer">Terms and Conditons</span> and <span onClick={(e) => { e.preventDefault(); setActiveModal('privacy'); }} className="text-primary-500 hover:text-primary-400 hover:underline cursor-pointer">Privacy Policy</span>.
                                     </label>
                                 </div>
                             </div>
@@ -427,7 +427,7 @@ export default function AuthPage({ onBack, onComplete, initialMode = 'login' }) 
                             type="submit"
                             className={`w-full font-bold py-3.5 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 transform active:scale-[0.98] ${(loading || (mode === 'signup' && (!agreed || password !== confirmPassword)) || (mode === 'forgot' && resetStep === 2 && newPassword !== confirmPassword))
                                 ? 'bg-slate-800 text-slate-500 cursor-not-allowed hidden-spinner'
-                                : 'bg-gradient-to-r from-gold-500 to-sky-600 hover:from-gold-400 hover:to-sky-500 text-slate-900 shadow-sky-500/25 ring-1 ring-white/10'
+                                : 'bg-gradient-to-r from-primary-500 to-primary-700 hover:from-primary-400 hover:to-primary-600 text-slate-900 shadow-primary-500/25 ring-1 ring-white/10'
                                 }`}
                         >
                             {loading ? 'Processing...' : (

@@ -4,7 +4,10 @@
 
 :root {
   color-scheme: dark;
-  background-color: #0B1221;
+  background-color: #0B1221; /* Global Dark Blue */
+  --bg-primary: #0B1221;
+  --text-primary: #ffffff;
+  --accent: #22d3ee; /* Cyan */
 }
 
 body {

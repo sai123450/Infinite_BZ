@@ -5,13 +5,13 @@ export default function LandingPage({ onNavigate, onLogin, onSignup, events, use
     const upcomingEvents = events.slice(0, 3);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-[#0b1021] to-slate-800 text-white font-sans selection:bg-gold-500/30">
+        <div className="min-h-screen bg-slate-900 text-white font-sans selection:bg-primary-500/30">
 
             {/* 1. NAVBAR (Deep Contrast Header) */}
             <nav className="fixed w-full z-50 bg-slate-900/95 backdrop-blur-md border-b border-white/10 shadow-lg">
                 <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-gold-500 font-bold text-xl">E</div>
+                        <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-primary-500 font-bold text-xl">E</div>
                         <span className="text-xl font-bold text-white tracking-tight">Infinite BZ</span>
                     </div>
 
@@ -37,7 +37,7 @@ export default function LandingPage({ onNavigate, onLogin, onSignup, events, use
                         {!user && (
                             <button
                                 onClick={onSignup}
-                                className="bg-gold-500 hover:bg-gold-600 text-slate-900 text-sm font-bold px-5 py-2.5 rounded-lg transition-all shadow-lg shadow-gold-500/20"
+                                className="bg-primary-500 hover:bg-primary-600 text-slate-900 text-sm font-bold px-5 py-2.5 rounded-lg transition-all shadow-lg shadow-primary-500/20"
                             >
                                 Get Started
                             </button>
@@ -55,7 +55,7 @@ export default function LandingPage({ onNavigate, onLogin, onSignup, events, use
                         <h1 className="text-5xl lg:text-7xl font-bold text-white leading-[1.1] mb-6 tracking-tight drop-shadow-sm">
                             Chennai's <br />
                             Networking Scene. <br />
-                            <span className="text-[#301934] drop-shadow-none">Unlocked.</span>
+                            <span className="text-primary-400 drop-shadow-none">Unlocked.</span>
                         </h1>
                         <p className="text-lg text-white/80 mb-10 leading-relaxed max-w-lg">
                             Stop checking 15 different sites. Join the unified community platform. Discover, join, and grow your network with auto-updates for free events.
@@ -63,7 +63,7 @@ export default function LandingPage({ onNavigate, onLogin, onSignup, events, use
                         <div className="flex flex-col sm:flex-row gap-4">
                             <button
                                 onClick={onNavigate}
-                                className="bg-gold-500 hover:bg-gold-600 text-[#301934] font-bold px-8 py-4 rounded-xl transition-all shadow-lg shadow-gold-500/25 flex items-center justify-center gap-2"
+                                className="bg-primary-500 hover:bg-primary-600 text-slate-900 font-bold px-8 py-4 rounded-xl transition-all shadow-lg shadow-primary-500/25 flex items-center justify-center gap-2"
                             >
                                 Find Events Free
                                 <ArrowRight size={20} />
@@ -76,7 +76,7 @@ export default function LandingPage({ onNavigate, onLogin, onSignup, events, use
                         <div className="mt-12 text-sm text-white/70 flex items-center gap-4">
                             <div className="flex -space-x-2">
                                 {[1, 2, 3, 4].map(i => (
-                                    <div key={i} className="w-8 h-8 rounded-full bg-purple-800 border-2 border-[#c165f0]" />
+                                    <div key={i} className="w-8 h-8 rounded-full bg-slate-800 border-2 border-primary-500" />
                                 ))}
                             </div>
                             Trusted by 500+ professionals in Chennai
@@ -84,7 +84,7 @@ export default function LandingPage({ onNavigate, onLogin, onSignup, events, use
                     </div>
 
                     <div className="relative">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-gold-500 to-white rounded-2xl blur opacity-30"></div>
+                        <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 to-white rounded-2xl blur opacity-30"></div>
                         <div className="relative rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-white/10 backdrop-blur-sm">
                             <img
                                 src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=2070&auto=format&fit=crop"
@@ -92,13 +92,12 @@ export default function LandingPage({ onNavigate, onLogin, onSignup, events, use
                                 className="w-full object-cover opacity-90"
                             />
 
-                            {/* Floating Card */}
-                            <div className="absolute bottom-6 left-6 right-6 bg-[#301934]/90 backdrop-blur-xl p-4 rounded-xl border border-white/10 flex items-center justify-between">
+                            <div className="absolute bottom-6 left-6 right-6 bg-slate-900/90 backdrop-blur-xl p-4 rounded-xl border border-white/10 flex items-center justify-between">
                                 <div>
-                                    <div className="text-xs text-gold-400 font-bold mb-1">NEXT UP</div>
+                                    <div className="text-xs text-primary-400 font-bold mb-1">NEXT UP</div>
                                     <div className="text-white font-semibold">Tech Meetup @ IIT Madras</div>
                                 </div>
-                                <button onClick={onNavigate} className="px-4 py-2 bg-gold-500 rounded-lg text-xs font-bold text-[#301934] hover:bg-gold-400">JOIN</button>
+                                <button onClick={onNavigate} className="px-4 py-2 bg-primary-500 rounded-lg text-xs font-bold text-slate-900 hover:bg-primary-400">JOIN</button>
                             </div>
                         </div>
                     </div>
@@ -136,7 +135,7 @@ export default function LandingPage({ onNavigate, onLogin, onSignup, events, use
 
                     <div className="grid md:grid-cols-3 gap-12 relative">
                         {/* Connecting Line (Desktop) */}
-                        <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gradient-to-r from-red-500/0 via-gold-500/50 to-red-500/0 border-t border-dashed border-white/20"></div>
+                        <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gradient-to-r from-red-500/0 via-primary-500/50 to-red-500/0 border-t border-dashed border-white/20"></div>
 
                         {[
                             { step: "01", title: "Choose Your City", desc: "Select Chennai (more coming soon) to see local tech events.", icon: MapPin },
@@ -144,9 +143,9 @@ export default function LandingPage({ onNavigate, onLogin, onSignup, events, use
                             { step: "03", title: "Register & Attend", desc: "Click through to the official page and secure your spot.", icon: ExternalLink }
                         ].map((item, i) => (
                             <div key={i} className="relative flex flex-col items-center text-center">
-                                <div className="w-24 h-24 rounded-2xl bg-[#1A2338] border border-white/10 flex items-center justify-center text-gold-500 mb-6 relative z-10 shadow-xl shadow-black/50 group hover:-translate-y-2 transition-transform duration-300">
+                                <div className="w-24 h-24 rounded-2xl bg-[#1A2338] border border-white/10 flex items-center justify-center text-primary-500 mb-6 relative z-10 shadow-xl shadow-black/50 group hover:-translate-y-2 transition-transform duration-300">
                                     <item.icon size={32} />
-                                    <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-gold-500 text-[#301934] font-bold flex items-center justify-center text-sm border-2 border-[#0B1221]">
+                                    <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-primary-500 text-slate-900 font-bold flex items-center justify-center text-sm border-2 border-slate-900">
                                         {item.step}
                                     </div>
                                 </div>
@@ -172,8 +171,8 @@ export default function LandingPage({ onNavigate, onLogin, onSignup, events, use
                             { title: 'Curated Data', desc: 'We clean and verify data. No more broken links or outdated event times.', icon: CheckCircle2 },
                             { title: '1-Click Register', desc: 'Jump straight to the registration page. No login walls on our end.', icon: MousePointer2 },
                         ].map((item, i) => (
-                            <div key={i} className="p-8 rounded-2xl bg-white/10 border border-white/10 hover:border-gold-500/30 hover:bg-white/15 transition-all group backdrop-blur-sm">
-                                <div className="w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center text-white mb-6 group-hover:bg-gold-500 group-hover:text-[#301934] transition-all">
+                            <div key={i} className="p-8 rounded-2xl bg-white/10 border border-white/10 hover:border-primary-500/30 hover:bg-white/15 transition-all group backdrop-blur-sm">
+                                <div className="w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center text-white mb-6 group-hover:bg-primary-500 group-hover:text-slate-900 transition-all">
                                     <item.icon size={28} />
                                 </div>
                                 <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
