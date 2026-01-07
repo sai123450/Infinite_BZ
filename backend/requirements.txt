@@ -18,3 +18,5 @@ apscheduler==3.10.4
 pydantic==2.5.3
 pydantic-settings==2.1.0
 email-validator==2.1.0.post1
+fastapi-mail
+argon2-cffi

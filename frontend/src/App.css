@@ -6,12 +6,12 @@
 }
 
 /* SPECIFIC USER PALETTE */
+/* SPECIFIC USER PALETTE */
 body,
 #root>div {
-  background-color: #c165f0 !important;
-  /* Main Background */
+  background-color: transparent !important;
+  /* Allow index.css #0B1221 to show */
   color: #FFFFFF;
-  /* Main Text (Headlines) */
 }
 
 /* Headings default to White */

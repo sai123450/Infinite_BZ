@@ -153,11 +153,11 @@ export default function Dashboard({ user, onLogout }) {
 
     return (
         <div className="min-h-screen flex font-sans">
-            {/* SIDEBAR (Accent Purple #953FC2) */}
-            <aside className="w-64 bg-[#953FC2] border-r border-white/20 flex flex-col fixed h-full z-20 hidden lg:flex text-white">
+            {/* SIDEBAR (Dark Slate) */}
+            <aside className="w-64 bg-slate-900 border-r border-white/20 flex flex-col fixed h-full z-20 hidden lg:flex text-white">
                 <div className="p-6">
                     <div className="flex items-center gap-3 font-bold text-xl text-white">
-                        <div className="w-8 h-8 bg-sky-500 rounded-lg flex items-center justify-center">
+                        <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
                             <i className="text-white">EF</i>
                         </div>
                         <div>
@@ -175,7 +175,7 @@ export default function Dashboard({ user, onLogout }) {
                 </nav>
 
                 <div className="p-4">
-                    <button className="w-full py-3 bg-gold-500 hover:bg-gold-600 text-sky-700 rounded-lg font-bold transition-colors shadow-lg shadow-gold-500/30">
+                    <button className="w-full py-3 bg-primary-500 hover:bg-primary-600 text-slate-900 rounded-lg font-bold transition-colors shadow-lg shadow-primary-500/30">
                         + Create Event
                     </button>
                     <button onClick={onLogout} className="flex items-center gap-3 px-4 py-3 w-full text-white/70 hover:text-white mt-4 transition-colors">
@@ -196,7 +196,7 @@ export default function Dashboard({ user, onLogout }) {
                             <input
                                 type="text"
                                 placeholder="Search events, venues..."
-                                className="bg-slate-800 border border-slate-700 rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-gold-500 w-64 placeholder:text-slate-500"
+                                className="bg-slate-800 border border-slate-700 rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-primary-500 w-64 placeholder:text-slate-500"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 onKeyDown={handleSearch}
@@ -209,7 +209,7 @@ export default function Dashboard({ user, onLogout }) {
                         <div className="relative">
                             <button
                                 onClick={() => setShowProfileMenu(!showProfileMenu)}
-                                className="w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center text-white font-bold hover:ring-2 hover:ring-white/20 transition-all"
+                                className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center text-slate-900 font-bold hover:ring-2 hover:ring-white/20 transition-all"
                             >
                                 {user?.full_name?.[0] || 'A'}
                             </button>
@@ -357,7 +357,7 @@ export default function Dashboard({ user, onLogout }) {
                                 key={page}
                                 onClick={() => handlePageChange(page)}
                                 className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm font-bold transition-all ${currentPage === page
-                                    ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/30'
+                                    ? 'bg-primary-500 text-slate-900 shadow-lg shadow-primary-500/30'
                                     : 'text-slate-500 hover:bg-slate-200'
                                     }`}
                             >
@@ -376,7 +376,7 @@ export default function Dashboard({ user, onLogout }) {
 
                 </div>
             </main>
-        </div>
+        </div >
     );
 }
 
@@ -397,13 +397,13 @@ function NavItem({ icon, label, active }) {
 
 function StatCard({ title, value, subtext, subtextColor, icon }) {
     return (
-        <div className="bg-slate-800 border border-slate-700 p-6 rounded-2xl flex items-start justify-between hover:border-gold-500/30 transition-colors">
+        <div className="bg-slate-800 border border-slate-700 p-6 rounded-2xl flex items-start justify-between hover:border-primary-500/30 transition-colors">
             <div>
                 <p className="text-slate-400 text-sm font-medium mb-1">{title}</p>
                 <h3 className="text-2xl font-bold text-white mb-1">{value}</h3>
                 <p className={`text-xs ${subtextColor}`}>{subtext}</p>
             </div>
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${icon.props.className?.includes('text-gold') ? 'bg-gold-500/10 text-gold-500' : 'bg-slate-700 text-slate-400'}`}>
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${icon.props.className?.includes('text-gold') ? 'bg-primary-500/10 text-primary-500' : 'bg-slate-700 text-slate-400'}`}>
                 {icon}
             </div>
         </div>
@@ -418,7 +418,7 @@ function FilterDropdown({ label, options, selected, onChange }) {
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors ${selected !== 'All'
-                    ? 'bg-sky-50 border-sky-200 text-sky-600'
+                    ? 'bg-primary-50 border-primary-200 text-primary-600'
                     : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
                     }`}
             >
@@ -437,7 +437,7 @@ function FilterDropdown({ label, options, selected, onChange }) {
                                     onChange(option);
                                     setIsOpen(false);
                                 }}
-                                className={`w-full text-left px-4 py-2 text-sm hover:bg-slate-50 transition-colors ${selected === option ? 'bg-sky-50 text-sky-600 font-semibold' : 'text-slate-600'}`}
+                                className={`w-full text-left px-4 py-2 text-sm hover:bg-slate-50 transition-colors ${selected === option ? 'bg-primary-50 text-primary-600 font-semibold' : 'text-slate-600'}`}
                             >
                                 {option}
                             </button>
@@ -524,7 +524,7 @@ function EventCard({ event, onRegister }) {
                         ? 'bg-green-500 text-white cursor-default'
                         : registering
                             ? 'bg-slate-700 text-slate-400 cursor-wait'
-                            : 'bg-gold-400 hover:bg-gold-500 text-slate-900 shadow-lg shadow-gold-500/20'
+                            : 'bg-primary-500 hover:bg-primary-400 text-slate-900 shadow-lg shadow-primary-500/20'
                         }`}
                 >
                     {registering ? 'Processing...' : registered ? 'Registered' : 'Register'}
