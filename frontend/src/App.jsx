@@ -3,6 +3,7 @@ import LandingPage from './components/LandingPage';
 import EventFeed from './components/EventFeed';
 import AuthPage from './components/AuthPage';
 import Dashboard from './components/Dashboard';
+import CreateEventPage from './components/CreateEventPage';
 import ErrorBoundary from './components/ErrorBoundary';
 
 export default function App() {
@@ -139,8 +140,53 @@ export default function App() {
           <Dashboard
             user={user}
             onLogout={handleLogout}
+            onNavigate={(view) => {
+              window.scrollTo(0, 0);
+              setCurrentView(view);
+            }}
           />
         </ErrorBoundary>
+      )}
+
+      {currentView === 'create-event' && (
+        <CreateEventPage
+          user={user}
+          onNavigate={(view) => {
+            window.scrollTo(0, 0);
+            setCurrentView(view);
+          }}
+          onLogout={handleLogout}
+          onSave={async (eventData) => {
+            // We can handle saving here or pass a callback that uses the API
+            // For now, let's reuse the logic or move it here.
+            // Actually CreateEventPage has onSave prop.
+            // Let's implement the API call logic inside CreateEventPage or pass a wrapper here.
+            // For consistency with Dashboard, let's just pass a simple fetch wrapper or let CreateEventPage handle it.
+            // CreateEventPage expects onSave(payload).
+
+            try {
+              const token = localStorage.getItem('token');
+              const res = await fetch('/api/v1/events', {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(eventData)
+              });
+              if (res.ok) {
+                const newEvent = await res.json();
+                return newEvent;
+              } else {
+                const data = await res.json();
+                throw new Error(data.message || "Unknown error");
+              }
+            } catch (err) {
+              console.error("Create event error", err);
+              throw err;
+            }
+          }}
+        />
       )}
     </>
   );

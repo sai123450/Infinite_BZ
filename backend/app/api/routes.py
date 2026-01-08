@@ -65,7 +65,7 @@ async def create_event(
     }
     
     new_event = Event(
-        **event_data.dict(exclude={"organizer_email", "price", "capacity"}), # Exclude non-db columns if they match exact table columns, or just pass as is if ignored by SQLModel init (safer to allow)
+        **event_data.dict(exclude={"organizer_email", "price", "organizer_name"}), # Exclude non-db columns if they match exact table columns, or just pass as is if ignored by SQLModel init (safer to allow)
         eventbrite_id=custom_id,
         url=f"https://infinitebz.com/events/{custom_id}", 
         organizer_name=event_data.organizer_name or current_user.full_name or "Community Member",

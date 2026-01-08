@@ -22,6 +22,37 @@ async def patch_database():
             ALTER TABLE userregistration 
             ADD COLUMN IF NOT EXISTS status VARCHAR DEFAULT 'PENDING';
         """)
+
+        print("🔨 Patching table 'event'...")
+        await conn.execute("""
+            ALTER TABLE event 
+            ADD COLUMN IF NOT EXISTS category VARCHAR DEFAULT 'Business';
+        """)
+
+        await conn.execute("""
+            ALTER TABLE event 
+            ADD COLUMN IF NOT EXISTS capacity INTEGER;
+        """)
+
+        await conn.execute("""
+            ALTER TABLE event 
+            ADD COLUMN IF NOT EXISTS registration_deadline TIMESTAMP;
+        """)
+
+        await conn.execute("""
+            ALTER TABLE event 
+            ADD COLUMN IF NOT EXISTS meeting_link VARCHAR;
+        """)
+
+        await conn.execute("""
+            ALTER TABLE event 
+            ADD COLUMN IF NOT EXISTS meeting_link_private BOOLEAN DEFAULT TRUE;
+        """)
+
+        await conn.execute("""
+            ALTER TABLE event 
+            ADD COLUMN IF NOT EXISTS timezone VARCHAR DEFAULT 'UTC';
+        """)
         
         print("✅ SUCCESS: Column 'confirmation_id' added!")
         await conn.close()

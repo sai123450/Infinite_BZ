@@ -13,3 +13,4 @@ beautifulsoup4==4.12.3
 lxml==5.1.0
 argon2-cffi==23.1.0
 fastapi-mail==1.4.1
+google-auth==2.26.2

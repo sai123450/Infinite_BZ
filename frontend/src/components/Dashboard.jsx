@@ -8,8 +8,9 @@ import CityDropdown from './CityDropdown';
 import CreateEventModal from './CreateEventModal';
 import EventDetailModal from './EventDetailModal';
 import MyEvents from './MyEvents';
+import Sidebar from './Sidebar';
 
-export default function Dashboard({ user, onLogout }) {
+export default function Dashboard({ user, onLogout, onNavigate }) {
     const [stats, setStats] = useState({
         total_users: 0,
         active_events: 0,
@@ -238,48 +239,21 @@ export default function Dashboard({ user, onLogout }) {
     return (
         <div className="min-h-screen flex font-sans">
             {/* SIDEBAR (Dark Slate) */}
-            <aside className="w-64 bg-slate-900 border-r border-white/20 flex flex-col fixed h-full z-20 hidden lg:flex text-white">
-                <div className="p-6">
-                    <div className="flex items-center gap-3 font-bold text-xl text-white">
-                        <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
-                            <i className="text-white">BZ</i>
-                        </div>
-                        <div>
-                            InfiniteBZ
-                            <span className="block text-[10px] font-normal text-white/70">Chennai Edition</span>
-                        </div>
-                    </div>
-                </div>
-
-                <nav className="flex-1 px-4 space-y-1 mt-6">
-                    <div onClick={() => setActiveView('feed')}>
-                        <NavItem icon={<LayoutDashboard size={20} />} label="Dashboard" active={activeView === 'feed'} />
-                    </div>
-                    <div onClick={() => setActiveView('my-events')}>
-                        <NavItem icon={<ClipboardList size={20} />} label="My Events" active={activeView === 'my-events'} />
-                    </div>
-                    <NavItem icon={<TrendingUp size={20} />} label="Analytics" />
-                    <NavItem icon={<Settings size={20} />} label="Settings" />
-                </nav>
-
-                <div className="p-4">
-                    <button
-                        onClick={() => setShowCreateEventModal(true)}
-                        className="w-full py-3 bg-primary-500 hover:bg-primary-600 text-slate-900 rounded-lg font-bold transition-colors shadow-lg shadow-primary-500/30"
-                    >
-                        + Create Event
-                    </button>
-                    <button onClick={onLogout} className="flex items-center gap-3 px-4 py-3 w-full text-white/70 hover:text-white mt-4 transition-colors">
-                        <LogOut size={18} />
-                        <span className="font-medium">Sign Out</span>
-                    </button>
-                </div>
-            </aside>
+            {/* SIDEBAR */}
+            <Sidebar
+                activePage={activeView === 'feed' ? 'dashboard' : activeView}
+                onNavigate={(view) => {
+                    if (view === 'dashboard') setActiveView('feed');
+                    else if (view === 'my-events') setActiveView('my-events');
+                }}
+                onLogout={onLogout}
+                onCreateClick={() => onNavigate('create-event')}
+            />
 
             {/* MAIN CONTENT */}
             <main className="flex-1 lg:ml-64 p-8">
                 {activeView === 'my-events' ? (
-                    <MyEvents onCreateNew={() => setShowCreateEventModal(true)} />
+                    <MyEvents onCreateNew={() => onNavigate('create-event')} />
                 ) : (
                     <>
                         {/* Header */}
@@ -538,17 +512,7 @@ export default function Dashboard({ user, onLogout }) {
 // --- SUBCOMPONENTS ---
 
 
-function NavItem({ icon, label, active }) {
-    return (
-        <button className={`flex items-center gap-3 px-4 py-3 w-full rounded-lg transition-all mb-1 ${active
-            ? 'bg-white/20 text-white font-bold' // Active state on purple sidebar
-            : 'text-white/70 hover:bg-white/10 hover:text-white'
-            }`}>
-            {icon}
-            <span className="text-sm">{label}</span>
-        </button>
-    )
-}
+// function NavItem removed as it is now in Sidebar.jsx
 
 function StatCard({ title, value, subtext, subtextColor, icon }) {
     return (
