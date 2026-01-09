@@ -9,19 +9,10 @@ export default function EventFeed({ events, loading, error, onBack }) {
   const [isRegistered, setIsRegistered] = useState(false);
 
   const handleEventClick = (event) => {
-    // Logic: Internal (InfiniteBZ) -> Open Modal | External -> Redirect
-    // Check 'source' OR if the URL is our internal placeholder
-    const isInternal = event.raw_data?.source === 'InfiniteBZ' || event.url?.includes('infinitebz.com');
-
-    if (isInternal) {
-      setSelectedEvent(event);
-      setIsModalOpen(true);
-      // Reset registration state for new view (in a real app, check API if already registered)
-      setIsRegistered(false);
-    } else {
-      // Track external click
-      handleExternalRedirect(event);
-    }
+    // Always open modal for consistent experience
+    setSelectedEvent(event);
+    setIsModalOpen(true);
+    setIsRegistered(false);
   };
 
   const handleExternalRedirect = async (event) => {

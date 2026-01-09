@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import {
     LayoutDashboard, Users, Calendar, Settings, LogOut,
     TrendingUp, AlertCircle, CheckCircle2, MoreHorizontal,
-    Search, Bell, Plus, Download, MessageSquare, ClipboardList, X
+    Search, Bell, Plus, Download, MessageSquare, ClipboardList, X, Eye
 } from 'lucide-react';
 import CityDropdown from './CityDropdown';
 import CreateEventModal from './CreateEventModal';
@@ -373,7 +373,7 @@ export default function Dashboard({ user, onLogout, onNavigate }) {
                                 />
                                 <FilterDropdown
                                     label="Source"
-                                    options={["All", "Eventbrite", "Meetup"]}
+                                    options={["All", "Eventbrite", "Meetup", "InfiniteBZ"]}
                                     selected={selectedSource}
                                     onChange={setSelectedSource}
                                 />
@@ -586,7 +586,9 @@ function EventCard({ event, onRegister, isRegistered }) {
     const [registering, setRegistering] = useState(false);
 
     const handleClick = async () => {
-        if (event.is_free && event.url.includes("eventbrite")) {
+        if (event.raw_data?.source === 'InfiniteBZ') {
+            onRegister(); // Parent handles opening modal
+        } else if (event.is_free && event.url.includes("eventbrite")) {
             setRegistering(true);
             await onRegister();
             setRegistering(false);
@@ -655,14 +657,19 @@ function EventCard({ event, onRegister, isRegistered }) {
                 <button
                     onClick={handleClick}
                     disabled={registering || isRegistered}
-                    className={`w-full py-2 rounded-lg text-xs font-bold transition-all ${isRegistered
+                    className={`w-full py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-2 ${isRegistered
                         ? 'bg-green-500 text-white cursor-default'
                         : registering
                             ? 'bg-slate-700 text-slate-400 cursor-wait'
                             : 'bg-primary-500 hover:bg-primary-400 text-slate-900 shadow-lg shadow-primary-500/20'
                         }`}
                 >
-                    {registering ? 'Processing...' : isRegistered ? 'Registered' : 'Register'}
+                    {event.raw_data?.source === 'InfiniteBZ'
+                        ? (
+                            <> <span>View</span> <Eye size={14} /> </>
+                        )
+                        : (registering ? 'Processing...' : isRegistered ? 'Registered' : 'Register')
+                    }
                 </button>
             </div>
         </div>

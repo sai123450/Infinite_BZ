@@ -57,8 +57,8 @@ export default function EventDetailModal({ event, isOpen, onClose, onRegister, i
                         <div className="absolute bottom-0 left-0 w-full p-6 md:p-10">
                             <div className="flex items-center gap-3 mb-4">
                                 <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border ${event.is_free
-                                        ? 'bg-green-500/10 text-green-400 border-green-500/20'
-                                        : 'bg-orange-500/10 text-orange-400 border-orange-500/20'
+                                    ? 'bg-green-500/10 text-green-400 border-green-500/20'
+                                    : 'bg-orange-500/10 text-orange-400 border-orange-500/20'
                                     }`}>
                                     {event.is_free ? 'Free Entry' : 'Paid Ticket'}
                                 </span>
@@ -90,8 +90,8 @@ export default function EventDetailModal({ event, isOpen, onClose, onRegister, i
                                         key={tab}
                                         onClick={() => setActiveTab(tab)}
                                         className={`px-6 py-3 text-sm font-bold uppercase tracking-wide transition-all border-b-2 ${activeTab === tab
-                                                ? 'border-primary-500 text-primary-400'
-                                                : 'border-transparent text-slate-500 hover:text-slate-300'
+                                            ? 'border-primary-500 text-primary-400'
+                                            : 'border-transparent text-slate-500 hover:text-slate-300'
                                             }`}
                                     >
                                         {tab}
@@ -166,105 +166,106 @@ export default function EventDetailModal({ event, isOpen, onClose, onRegister, i
                             </div>
                         </div>
 
-                        {/* RIGHT COLUMN - SIDEBAR (4 cols) - STICKY */}
-                        <div className="lg:col-span-4 space-y-6">
+                        {/* RIGHT COLUMN - SIDEBAR (4 cols) - STICKY WRAPPER */}
+                        <div className="lg:col-span-4">
+                            <div className="space-y-6 lg:sticky lg:top-8">
 
-                            {/* ACTION CARD */}
-                            <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-xl sticky top-4">
-                                <div className="mb-6">
-                                    <p className="text-slate-400 text-sm mb-1">Price</p>
-                                    <div className="flex items-end gap-2">
-                                        <span className="text-4xl font-extrabold text-white">
-                                            {event.is_free ? 'Free' : `₹${event.raw_data?.price || 499}`}
-                                        </span>
-                                        {!event.is_free && <span className="text-slate-500 mb-1 line-through text-sm">₹999</span>}
+                                {/* ACTION CARD */}
+                                <div className="bg-slate-800/80 backdrop-blur-xl rounded-3xl p-6 border border-white/10 shadow-2xl ring-1 ring-white/5">
+                                    <div className="mb-6">
+                                        <p className="text-slate-400 text-sm mb-1">Price</p>
+                                        <div className="flex items-end gap-2">
+                                            <span className="text-4xl font-extrabold text-white">
+                                                {event.is_free ? 'Free' : `₹${event.raw_data?.price || 499}`}
+                                            </span>
+                                            {!event.is_free && <span className="text-slate-500 mb-1 line-through text-sm">₹999</span>}
+                                        </div>
+                                        <p className="text-red-400 text-xs font-bold mt-2 flex items-center gap-1">
+                                            <Clock size={12} /> Only {event.raw_data?.capacity ? Math.floor(event.raw_data.capacity * 0.1) : 12} seats left
+                                        </p>
                                     </div>
-                                    <p className="text-red-400 text-xs font-bold mt-2 flex items-center gap-1">
-                                        <Clock size={12} /> Only {event.raw_data?.capacity ? Math.floor(event.raw_data.capacity * 0.1) : 12} seats left
+
+                                    <button
+                                        onClick={() => {
+                                            if (!isRegistered) {
+                                                onRegister(event);
+                                                // onClose(); // Optional: keep open to show success state
+                                            }
+                                        }}
+                                        disabled={isRegistered}
+                                        className={`w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all duration-300 ${isRegistered
+                                            ? 'bg-green-500/20 text-green-400 border border-green-500/50 cursor-default'
+                                            : 'bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-500 hover:to-indigo-500 text-white shadow-lg shadow-primary-500/25 hover:shadow-primary-500/50 hover:-translate-y-0.5'
+                                            }`}
+                                    >
+                                        {isRegistered ? (
+                                            <> <CheckCircle2 className="animate-in zoom-in spin-in-180" /> Registered </>
+                                        ) : (
+                                            <> <Ticket className="animate-pulse" /> Auto-Register </>
+                                        )}
+                                    </button>
+                                    <p className="text-center text-xs text-slate-500 mt-3">
+                                        One-click registration powered by InfiniteBZ
                                     </p>
                                 </div>
 
-                                <button
-                                    onClick={() => {
-                                        if (!isRegistered) {
-                                            onRegister(event);
-                                            // onClose(); // Optional: keep open to show success state
-                                        }
-                                    }}
-                                    disabled={isRegistered}
-                                    className={`w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all ${isRegistered
-                                            ? 'bg-green-500 text-white cursor-default'
-                                            : 'bg-primary-500 hover:bg-primary-600 text-slate-900 shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 hover:-translate-y-1'
-                                        }`}
-                                >
-                                    {isRegistered ? (
-                                        <> <CheckCircle2 /> Registered </>
-                                    ) : (
-                                        <> <Ticket className="animate-pulse" /> Auto-Register </>
-                                    )}
-                                </button>
-                                <p className="text-center text-xs text-slate-500 mt-3">
-                                    One-click registration powered by InfiniteBZ
-                                </p>
-                            </div>
+                                {/* DETAILS CARD */}
+                                <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 space-y-5">
+                                    <div className="flex gap-4">
+                                        <div className="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center flex-shrink-0 text-primary-500 border border-slate-700">
+                                            <Calendar size={20} />
+                                        </div>
+                                        <div>
+                                            <p className="font-bold text-white text-sm">
+                                                {new Date(event.start_time).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
+                                            </p>
+                                            <p className="text-xs text-slate-400">
+                                                {new Date(event.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - 05:00 PM
+                                            </p>
+                                            <button className="text-primary-400 text-xs font-bold mt-1 hover:underline">Add to Calendar</button>
+                                        </div>
+                                    </div>
 
-                            {/* DETAILS CARD */}
-                            <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 space-y-5">
-                                <div className="flex gap-4">
-                                    <div className="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center flex-shrink-0 text-primary-500 border border-slate-700">
-                                        <Calendar size={20} />
+                                    <div className="flex gap-4">
+                                        <div className="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center flex-shrink-0 text-primary-500 border border-slate-700">
+                                            <MapPin size={20} />
+                                        </div>
+                                        <div>
+                                            <p className="font-bold text-white text-sm">
+                                                {event.venue_name || "Online Event"}
+                                            </p>
+                                            <p className="text-xs text-slate-400">
+                                                {event.venue_address || "Chennai, Tamil Nadu"}
+                                            </p>
+                                            <button className="text-primary-400 text-xs font-bold mt-1 hover:underline">Get Directions</button>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p className="font-bold text-white text-sm">
-                                            {new Date(event.start_time).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
-                                        </p>
-                                        <p className="text-xs text-slate-400">
-                                            {new Date(event.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - 05:00 PM
-                                        </p>
-                                        <button className="text-primary-400 text-xs font-bold mt-1 hover:underline">Add to Calendar</button>
-                                    </div>
-                                </div>
 
-                                <div className="flex gap-4">
-                                    <div className="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center flex-shrink-0 text-primary-500 border border-slate-700">
-                                        <MapPin size={20} />
-                                    </div>
-                                    <div>
-                                        <p className="font-bold text-white text-sm">
-                                            {event.venue_name || "Online Event"}
-                                        </p>
-                                        <p className="text-xs text-slate-400">
-                                            {event.venue_address || "Chennai, Tamil Nadu"}
-                                        </p>
-                                        <button className="text-primary-400 text-xs font-bold mt-1 hover:underline">Get Directions</button>
-                                    </div>
-                                </div>
-
-                                {/* Mini Map Placeholder */}
-                                <div className="h-32 bg-slate-700/30 rounded-xl w-full relative overflow-hidden group cursor-pointer">
-                                    <div className="absolute inset-0 bg-[url('https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/80.2376,13.0674,13,0/300x200?access_token=PLACEHOLDER')] bg-cover opacity-50 grayscale group-hover:grayscale-0 transition-all" />
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                        <div className="bg-white text-slate-900 px-3 py-1.5 rounded-lg shadow-lg text-xs font-bold flex items-center gap-1 group-hover:scale-110 transition-transform">
-                                            <MapPin size={12} className="text-red-500" /> View Map
+                                    {/* Mini Map Placeholder */}
+                                    <div className="h-32 bg-slate-700/30 rounded-xl w-full relative overflow-hidden group cursor-pointer">
+                                        <div className="absolute inset-0 bg-[url('https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/80.2376,13.0674,13,0/300x200?access_token=PLACEHOLDER')] bg-cover opacity-50 grayscale group-hover:grayscale-0 transition-all" />
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            <div className="bg-white text-slate-900 px-3 py-1.5 rounded-lg shadow-lg text-xs font-bold flex items-center gap-1 group-hover:scale-110 transition-transform">
+                                                <MapPin size={12} className="text-red-500" /> View Map
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* ORGANIZER CARD */}
-                            <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
-                                    {event.organizer_name?.[0] || 'C'}
+                                {/* ORGANIZER CARD */}
+                                <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50 flex items-center gap-4">
+                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+                                        {event.organizer_name?.[0] || 'C'}
+                                    </div>
+                                    <div className="flex-1">
+                                        <p className="font-bold text-white text-sm">{event.organizer_name || "Community Host"}</p>
+                                        <p className="text-xs text-slate-400">Organized by {event.organizer_name?.split(' ')[0]}</p>
+                                    </div>
+                                    <button className="px-3 py-1.5 rounded-lg border border-slate-600 text-xs font-bold text-white hover:bg-slate-700 transition-colors">
+                                        Follow
+                                    </button>
                                 </div>
-                                <div className="flex-1">
-                                    <p className="font-bold text-white text-sm">{event.organizer_name || "Community Host"}</p>
-                                    <p className="text-xs text-slate-400">Organized by {event.organizer_name?.split(' ')[0]}</p>
-                                </div>
-                                <button className="px-3 py-1.5 rounded-lg border border-slate-600 text-xs font-bold text-white hover:bg-slate-700 transition-colors">
-                                    Follow
-                                </button>
                             </div>
-
                         </div>
                     </div>
                 </div>

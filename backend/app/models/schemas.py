@@ -61,6 +61,10 @@ class EventCreate(SQLModel):
     organizer_name: Optional[str] = None
     organizer_email: Optional[str] = None
     price: Optional[str] = None
+    
+    # Content Fields
+    agenda: Optional[List[Dict[str, Any]]] = None
+    speakers: Optional[List[Dict[str, Any]]] = None
 
 class UserRegistration(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)

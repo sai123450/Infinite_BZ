@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar, MapPin, Type, AlignLeft, Clock, Globe, X, Check, ChevronRight, ChevronLeft, Image as ImageIcon } from 'lucide-react';
+import { Calendar, MapPin, Type, AlignLeft, Clock, Globe, X, Check, ChevronRight, ChevronLeft, Image as ImageIcon, Plus, Trash2, User, List, Link as LinkIcon, Twitter, Linkedin } from 'lucide-react';
 
 export default function CreateEventModal({ isOpen, onClose, onSave }) {
     const [step, setStep] = useState(1);
@@ -13,7 +13,9 @@ export default function CreateEventModal({ isOpen, onClose, onSave }) {
         endTime: "12:00",
         mode: "offline", // or 'online'
         location: "",
-        imageUrl: ""
+        imageUrl: "",
+        agendaItems: [],
+        speakers: []
     });
 
     if (!isOpen) return null;
@@ -35,9 +37,65 @@ export default function CreateEventModal({ isOpen, onClose, onSave }) {
             is_free: true, // Defaulting for now
             venue_name: formData.mode === 'online' ? 'Online Event' : formData.location,
             venue_address: formData.mode === 'online' ? 'Online' : formData.location,
-            online_event: formData.mode === 'online'
+            online_event: formData.mode === 'online',
+            agenda: formData.agendaItems,
+            speakers: formData.speakers
         };
         await onSave(payload);
+    };
+
+    // --- Helpers for Agenda ---
+    const addAgendaItem = () => {
+        setFormData(prev => ({
+            ...prev,
+            agendaItems: [
+                ...prev.agendaItems,
+                { id: Date.now(), startTime: "", endTime: "", title: "", description: "" }
+            ]
+        }));
+    };
+
+    const removeAgendaItem = (id) => {
+        setFormData(prev => ({
+            ...prev,
+            agendaItems: prev.agendaItems.filter(item => item.id !== id)
+        }));
+    };
+
+    const updateAgendaItem = (id, field, value) => {
+        setFormData(prev => ({
+            ...prev,
+            agendaItems: prev.agendaItems.map(item =>
+                item.id === id ? { ...item, [field]: value } : item
+            )
+        }));
+    };
+
+    // --- Helpers for Speakers ---
+    const addSpeaker = () => {
+        setFormData(prev => ({
+            ...prev,
+            speakers: [
+                ...prev.speakers,
+                { id: Date.now(), name: "", role: "", company: "", imageUrl: "", linkedIn: "", twitter: "" }
+            ]
+        }));
+    };
+
+    const removeSpeaker = (id) => {
+        setFormData(prev => ({
+            ...prev,
+            speakers: prev.speakers.filter(item => item.id !== id)
+        }));
+    };
+
+    const updateSpeaker = (id, field, value) => {
+        setFormData(prev => ({
+            ...prev,
+            speakers: prev.speakers.map(item =>
+                item.id === id ? { ...item, [field]: value } : item
+            )
+        }));
     };
 
     return (
@@ -48,7 +106,7 @@ export default function CreateEventModal({ isOpen, onClose, onSave }) {
                 <div className="p-6 border-b border-slate-700 flex justify-between items-center bg-slate-800/50">
                     <div>
                         <h2 className="text-xl font-bold text-white">Create New Event</h2>
-                        <p className="text-sm text-slate-400">Step {step} of 3</p>
+                        <p className="text-sm text-slate-400">Step {step} of 4</p>
                     </div>
                     <button onClick={onClose} className="p-2 hover:bg-slate-700 rounded-lg text-slate-400 hover:text-white transition-colors">
                         <X size={20} />
@@ -59,7 +117,7 @@ export default function CreateEventModal({ isOpen, onClose, onSave }) {
                 <div className="w-full h-1 bg-slate-700">
                     <div
                         className="h-full bg-primary-500 transition-all duration-300 ease-out shadow-[0_0_10px_rgba(34,211,238,0.5)]"
-                        style={{ width: `${(step / 3) * 100}%` }}
+                        style={{ width: `${(step / 4) * 100}%` }}
                     />
                 </div>
 
@@ -194,8 +252,8 @@ export default function CreateEventModal({ isOpen, onClose, onSave }) {
                                     <button
                                         onClick={() => setFormData(p => ({ ...p, mode: 'offline' }))}
                                         className={`flex-1 py-3 px-4 rounded-xl border flex items-center justify-center gap-2 transition-all ${formData.mode === 'offline'
-                                                ? 'bg-primary-500/10 border-primary-500 text-primary-400'
-                                                : 'bg-slate-900 border-slate-700 text-slate-400 hover:bg-slate-800'
+                                            ? 'bg-primary-500/10 border-primary-500 text-primary-400'
+                                            : 'bg-slate-900 border-slate-700 text-slate-400 hover:bg-slate-800'
                                             }`}
                                     >
                                         <MapPin size={18} /> In Person
@@ -203,8 +261,8 @@ export default function CreateEventModal({ isOpen, onClose, onSave }) {
                                     <button
                                         onClick={() => setFormData(p => ({ ...p, mode: 'online' }))}
                                         className={`flex-1 py-3 px-4 rounded-xl border flex items-center justify-center gap-2 transition-all ${formData.mode === 'online'
-                                                ? 'bg-primary-500/10 border-primary-500 text-primary-400'
-                                                : 'bg-slate-900 border-slate-700 text-slate-400 hover:bg-slate-800'
+                                            ? 'bg-primary-500/10 border-primary-500 text-primary-400'
+                                            : 'bg-slate-900 border-slate-700 text-slate-400 hover:bg-slate-800'
                                             }`}
                                     >
                                         <Globe size={18} /> Virtual Event
@@ -224,8 +282,161 @@ export default function CreateEventModal({ isOpen, onClose, onSave }) {
                         </div>
                     )}
 
-                    {/* STEP 3: REVIEW */}
+                    {/* STEP 3: CONTENT (AGENDA & SPEAKERS) */}
                     {step === 3 && (
+                        <div className="space-y-8 animate-in slide-in-from-right-4 duration-200">
+
+                            {/* AGENDA SECTION */}
+                            <div className="space-y-4">
+                                <div className="flex justify-between items-center">
+                                    <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                                        <List className="text-primary-500" size={20} /> Agenda (Optional)
+                                    </h3>
+                                    <button onClick={addAgendaItem} className="text-xs flex items-center gap-1 bg-slate-700 hover:bg-slate-600 text-white px-3 py-1.5 rounded-lg transition-colors">
+                                        <Plus size={14} /> Add Session
+                                    </button>
+                                </div>
+                                <div className="space-y-3">
+                                    {formData.agendaItems.length === 0 && (
+                                        <p className="text-sm text-slate-500 italic text-center py-4 border border-dashed border-slate-700 rounded-lg">
+                                            No sessions added yet.
+                                        </p>
+                                    )}
+                                    {formData.agendaItems.map((item, index) => (
+                                        <div key={item.id} className="bg-slate-900/50 border border-slate-700 rounded-xl p-4 space-y-3 relative group">
+                                            <button
+                                                onClick={() => removeAgendaItem(item.id)}
+                                                className="absolute top-4 right-4 text-slate-600 hover:text-red-400 transition-colors"
+                                            >
+                                                <Trash2 size={16} />
+                                            </button>
+
+                                            <div className="grid grid-cols-2 gap-3 pr-8">
+                                                <input
+                                                    type="time"
+                                                    value={item.startTime}
+                                                    onChange={(e) => updateAgendaItem(item.id, 'startTime', e.target.value)}
+                                                    className="bg-slate-800 border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-primary-500 w-full"
+                                                />
+                                                <input
+                                                    type="time"
+                                                    value={item.endTime}
+                                                    onChange={(e) => updateAgendaItem(item.id, 'endTime', e.target.value)}
+                                                    className="bg-slate-800 border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:border-primary-500 w-full"
+                                                />
+                                            </div>
+                                            <input
+                                                placeholder="Session Title"
+                                                value={item.title}
+                                                onChange={(e) => updateAgendaItem(item.id, 'title', e.target.value)}
+                                                className="w-full bg-slate-800 border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder:text-slate-600 focus:border-primary-500"
+                                            />
+                                            <textarea
+                                                placeholder="Short description..."
+                                                value={item.description}
+                                                onChange={(e) => updateAgendaItem(item.id, 'description', e.target.value)}
+                                                rows={2}
+                                                className="w-full bg-slate-800 border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder:text-slate-600 focus:border-primary-500 resize-none"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <hr className="border-slate-700" />
+
+                            {/* SPEAKERS SECTION */}
+                            <div className="space-y-4">
+                                <div className="flex justify-between items-center">
+                                    <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                                        <User className="text-primary-500" size={20} /> Speakers (Optional)
+                                    </h3>
+                                    <button onClick={addSpeaker} className="text-xs flex items-center gap-1 bg-slate-700 hover:bg-slate-600 text-white px-3 py-1.5 rounded-lg transition-colors">
+                                        <Plus size={14} /> Add Speaker
+                                    </button>
+                                </div>
+                                <div className="space-y-3">
+                                    {formData.speakers.length === 0 && (
+                                        <p className="text-sm text-slate-500 italic text-center py-4 border border-dashed border-slate-700 rounded-lg">
+                                            No speakers added yet.
+                                        </p>
+                                    )}
+                                    {formData.speakers.map((item) => (
+                                        <div key={item.id} className="bg-slate-900/50 border border-slate-700 rounded-xl p-4 relative">
+                                            <button
+                                                onClick={() => removeSpeaker(item.id)}
+                                                className="absolute top-4 right-4 text-slate-600 hover:text-red-400 transition-colors"
+                                            >
+                                                <Trash2 size={16} />
+                                            </button>
+
+                                            <div className="flex gap-4 items-start">
+                                                <div className="w-16 h-16 bg-slate-800 rounded-full flex-shrink-0 flex items-center justify-center overflow-hidden border border-slate-700">
+                                                    {item.imageUrl ? (
+                                                        <img src={item.imageUrl} alt="" className="w-full h-full object-cover" />
+                                                    ) : (
+                                                        <User className="text-slate-600" size={24} />
+                                                    )}
+                                                </div>
+                                                <div className="flex-1 space-y-3 pr-6">
+                                                    <input
+                                                        placeholder="Speaker Name"
+                                                        value={item.name}
+                                                        onChange={(e) => updateSpeaker(item.id, 'name', e.target.value)}
+                                                        className="w-full bg-slate-800 border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder:text-slate-600 focus:border-primary-500"
+                                                    />
+                                                    <div className="grid grid-cols-2 gap-3">
+                                                        <input
+                                                            placeholder="Role / Title"
+                                                            value={item.role}
+                                                            onChange={(e) => updateSpeaker(item.id, 'role', e.target.value)}
+                                                            className="w-full bg-slate-800 border-slate-700 rounded-lg px-3 py-2 text-xs text-white placeholder:text-slate-600 focus:border-primary-500"
+                                                        />
+                                                        <input
+                                                            placeholder="Company"
+                                                            value={item.company}
+                                                            onChange={(e) => updateSpeaker(item.id, 'company', e.target.value)}
+                                                            className="w-full bg-slate-800 border-slate-700 rounded-lg px-3 py-2 text-xs text-white placeholder:text-slate-600 focus:border-primary-500"
+                                                        />
+                                                    </div>
+                                                    <input
+                                                        placeholder="Image URL (https://...)"
+                                                        value={item.imageUrl}
+                                                        onChange={(e) => updateSpeaker(item.id, 'imageUrl', e.target.value)}
+                                                        className="w-full bg-slate-800 border-slate-700 rounded-lg px-3 py-2 text-xs text-white placeholder:text-slate-600 focus:border-primary-500"
+                                                    />
+                                                    <div className="flex gap-3">
+                                                        <div className="flex-1 relative">
+                                                            <Linkedin size={14} className="absolute left-3 top-2.5 text-slate-500" />
+                                                            <input
+                                                                placeholder="LinkedIn URL"
+                                                                value={item.linkedIn}
+                                                                onChange={(e) => updateSpeaker(item.id, 'linkedIn', e.target.value)}
+                                                                className="w-full bg-slate-800 border-slate-700 rounded-lg pl-9 pr-3 py-2 text-xs text-white placeholder:text-slate-600 focus:border-primary-500"
+                                                            />
+                                                        </div>
+                                                        <div className="flex-1 relative">
+                                                            <Twitter size={14} className="absolute left-3 top-2.5 text-slate-500" />
+                                                            <input
+                                                                placeholder="Twitter URL"
+                                                                value={item.twitter}
+                                                                onChange={(e) => updateSpeaker(item.id, 'twitter', e.target.value)}
+                                                                className="w-full bg-slate-800 border-slate-700 rounded-lg pl-9 pr-3 py-2 text-xs text-white placeholder:text-slate-600 focus:border-primary-500"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                        </div>
+                    )}
+
+                    {/* STEP 4: REVIEW */}
+                    {step === 4 && (
                         <div className="space-y-6 animate-in slide-in-from-right-4 duration-200 text-center">
                             <div className="w-20 h-20 bg-primary-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <Check className="text-primary-500" size={40} />
@@ -249,6 +460,16 @@ export default function CreateEventModal({ isOpen, onClose, onSave }) {
                                     <span className="text-slate-500 text-sm">Category</span>
                                     <span className="text-white text-sm font-medium">{formData.category}</span>
                                 </div>
+                                <div className="pt-2 border-t border-slate-700 mt-2">
+                                    <div className="flex justify-between">
+                                        <span className="text-slate-500 text-sm">Agenda Items</span>
+                                        <span className="text-white text-sm font-medium">{formData.agendaItems.length}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="text-slate-500 text-sm">Speakers</span>
+                                        <span className="text-white text-sm font-medium">{formData.speakers.length}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     )}
@@ -267,7 +488,7 @@ export default function CreateEventModal({ isOpen, onClose, onSave }) {
                         <div></div>
                     )}
 
-                    {step < 3 ? (
+                    {step < 4 ? (
                         <button
                             onClick={handleNext}
                             className="px-6 py-2.5 rounded-xl font-bold bg-primary-500 hover:bg-primary-600 text-slate-900 shadow-lg shadow-primary-500/20 transition-all flex items-center gap-2"

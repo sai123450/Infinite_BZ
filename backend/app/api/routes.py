@@ -1,7 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, UploadFile, File
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from typing import List, Optional
+import shutil
+import os
 
 from app.core.database import get_session
 from app.models.schemas import Event, UserRegistration, EventListResponse, User, EventCreate
@@ -43,6 +45,32 @@ async def sync_events(city: str = "chennai", session: AsyncSession = Depends(get
 
 # --- 1.5 CREATE EVENT (User Generated) ---
 
+@router.post("/upload")
+async def upload_file(file: UploadFile = File(...)):
+    """
+    Uploads an image file and returns the static URL.
+    """
+    try:
+        # Create uploads directory if not exists
+        upload_dir = "uploads"
+        os.makedirs(upload_dir, exist_ok=True)
+        
+        # Determine file path
+        # Use simple filename sanitization or uuid
+        filename = f"{uuid.uuid4()}-{file.filename}"
+        file_path = os.path.join(upload_dir, filename)
+        
+        # Save file
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+            
+        # Return URL (Assuming localhost for dev, needs env var for prod)
+        # Using a relative path that frontend can prepend domain to, or full path if simple
+        return {"url": f"http://localhost:8000/uploads/{filename}"}
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"File upload failed: {str(e)}")
+
 @router.post("/events", response_model=Event)
 async def create_event(
     event_data: EventCreate,
@@ -62,11 +90,13 @@ async def create_event(
         "created_by": current_user.email,
         "organizer_email": event_data.organizer_email,
         "price": event_data.price,
-        "capacity": event_data.capacity
+        "capacity": event_data.capacity,
+        "agenda": event_data.agenda,
+        "speakers": event_data.speakers
     }
     
     new_event = Event(
-        **event_data.dict(exclude={"organizer_email", "price", "organizer_name"}), # Exclude non-db columns if they match exact table columns, or just pass as is if ignored by SQLModel init (safer to allow)
+        **event_data.dict(exclude={"organizer_email", "price", "organizer_name", "agenda", "speakers"}), # Exclude non-db columns
         eventbrite_id=custom_id,
         url=f"https://infinitebz.com/events/{custom_id}", 
         organizer_name=event_data.organizer_name or current_user.full_name or "Community Member",
