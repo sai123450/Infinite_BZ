@@ -129,6 +129,8 @@ The SettingsPage component allows authenticated users to manage their profile in
 | `onNavigate` | Function | Yes | Navigation callback function to handle page transitions |
 
 
+```
+
 ## State Management
 
 The component manages the following state:
